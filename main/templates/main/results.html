@@ -2,7 +2,38 @@
 {% load staticfiles %}
 {% block content %}
 <div class="container">
-    <h1>Result Page for {{ id }}</h1>
-    <p>{{ output }}</p>
+    <h5>Result for:</h5>
+    <a href="{{ data.url }}">{{ data.url }}</a><br/>
+    <p><b>Title: </b>{{ data.title }}</p>
+    
+    <p><b>Decription: </b>{{ data.description }}</p>
+    <b>Keywords:</b>
+    <ul>
+        {% for keyword in data.keywords %}
+        <li>{{ keyword }}</li>
+        {% endfor %}
+    </ul>
+    {% if data.images %}
+    <b>Images: </b>
+        <div class="row">
+        {% for image in data.images %}
+        <div class="col s12 m3">
+            <div class="card">
+            <div class="card-image">
+                <img src="{{ image.src }}">
+            </div>
+            <div class="card-content">
+                <p>Image {{ forloop.counter }}</p>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+   
+    <b>Videos: </b>
+    <p>{{ data.videos }}</p>
+ 
 </div>
 {% endblock %}

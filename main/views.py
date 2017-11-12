@@ -4,6 +4,11 @@ from .models import Article
 from .forms import AnalyzeForm
 import datetime 
 from django.utils import timezone
+import json
+import lassie
+import pprint
+import requests
+from bs4 import BeautifulSoup
 
 # Create your views here.
 def articles(request):
@@ -31,7 +36,22 @@ def analyze(request):
         q = Article(article_url=request.POST.get("article_url", ""), pub_date=timezone.now())
         q.save()
         id = q.id
-        output = request.POST.get("article_url", "")
-    return render(request, 'main/results.html', {'output': output, 'id': id})
+        p = Article.objects.get(pk=id)
+        p.result_set.all() 
+        p.result_set.create(author='Sith', recommend=True, rating=3)
+        url = request.POST.get("article_url", "")
+        data = lassie.fetch(url)
+        extract_videos(url)
+    
+    return render(request, 'main/results.html', {'data': data, 'id': id})
+
+def extract_videos(url):
+    meet = requests.get(url).text 
+    bso = BeautifulSoup(meet, "html.parser")
+    videos = bso.findAll({"class": "powa-video"})
+    print(videos)
+    for i in videos:
+        print (str(i))
+    
     
 

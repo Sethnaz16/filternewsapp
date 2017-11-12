@@ -16,7 +16,12 @@ class Article(models.Model):
 
 class Result(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    author = models.CharField(max_length=200)
+    # title = models.CharField(max_length=500)
+    # description = models.CharField(max_length=1000)
+    # # keywords = ArrayField(models.CharField(max_length = 300))
+    # # images = ArrayField(models.CharField(max_length = 300))
+    # # videos = ArrayField(models.CharField(max_length = 300))py
+    author = models.CharField(max_length=200, default='author')
     recommend = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
 
