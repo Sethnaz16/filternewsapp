@@ -14,8 +14,13 @@ class Article(models.Model):
     def was_article_recommended(self):
         return False
 
-class Rating(models.Model):
+class Result(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    author_name = models.CharField(max_length = 200, default = 'Unknown')
+    author = models.CharField(max_length=200)
+    recommend = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
+
+
+
+
 

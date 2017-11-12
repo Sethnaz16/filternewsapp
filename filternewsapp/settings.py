@@ -33,13 +33,13 @@ TEST_RUNNER = 'filternewsapp.heroku_test_runner.HerokuDiscoverRunner'
 # Application definition
 
 INSTALLED_APPS = (
+    'main.apps.MainConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
 )
 
 MIDDLEWARE_CLASSES = (

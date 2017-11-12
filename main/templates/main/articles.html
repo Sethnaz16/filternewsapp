@@ -1,0 +1,17 @@
+{% extends "main/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div class="container">
+  {% if latest_article_list %}
+    <ul>
+      {% for article in latest_article_list %}
+        <li><a href="{% url 'main:detail' article.id %}">{{ article.article_url }}</a></li>
+      {% endfor %}
+
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

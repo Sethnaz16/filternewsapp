@@ -10,6 +10,6 @@ import main.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'^$', main.views.index, name='index'),
+    url(r'^main/', include('main.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]

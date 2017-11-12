@@ -1,0 +1,6 @@
+<p>{{ article.article_url }}</p>
+<ul>
+    {% for result in article.result_set.all %}
+        <li>{{ result.author }}</li>
+    {% endfor %}
+</ul>
