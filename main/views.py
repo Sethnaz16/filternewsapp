@@ -7,7 +7,7 @@ from django.utils import timezone
 
 # Create your views here.
 def articles(request):
-    latest_article_list = Article.objects.order_by('-pub_date')[:5]
+    latest_article_list = Article.objects.order_by('-pub_date')[:20]
     context = {'latest_article_list': latest_article_list}
     return render(request, 'main/articles.html', context)
 

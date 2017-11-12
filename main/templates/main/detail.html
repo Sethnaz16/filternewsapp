@@ -1,6 +1,13 @@
-<p>{{ article.article_url }}</p>
-<ul>
-    {% for result in article.result_set.all %}
-        <li>{{ result.author }}</li>
-    {% endfor %}
-</ul>
+{% extends "main/base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container">
+    <p>{{ article.article_url }}</p>
+    <ul>
+        {% for result in article.result_set.all %}
+            <li>{{ result.author }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
