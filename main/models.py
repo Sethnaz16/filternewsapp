@@ -25,6 +25,9 @@ class Result(models.Model):
     recommend = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
 
+class UntrustedSource(models.Model):
+    source_url = models.CharField(max_length = 300)
+
 
 
 

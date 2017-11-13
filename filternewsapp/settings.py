@@ -82,23 +82,23 @@ WSGI_APPLICATION = 'filternewsapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deo3oaq2qjmp48',
-        'USER': 'gaaoijpqinzern',
-        'PASSWORD': '989d00a88be69a89744cb56d0417f2a85e41b2bb6900957a4e0e6bb571c0e955',
-        'HOST': 'ec2-107-22-252-91.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'deo3oaq2qjmp48',
+#         'USER': 'gaaoijpqinzern',
+#         'PASSWORD': '989d00a88be69a89744cb56d0417f2a85e41b2bb6900957a4e0e6bb571c0e955',
+#         'HOST': 'ec2-107-22-252-91.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
