@@ -10,6 +10,10 @@ gunicorn = "*"
 "psycopg2" = "*"
 whitenoise = "*"
 lassie = "*"
+"django-adaptors" = "*"
+csvimporter = "*"
+"django-csvimport" = "*"
+"django-import-export" = "*"
 
 [requires]
 python_version = "3.6"

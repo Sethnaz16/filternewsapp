@@ -1,7 +1,6 @@
 import datetime
 from django.db import models
 from django.utils import timezone
-
 # # Create your models here.
 # class Greeting(models.Model):
 #     when = models.DateTimeField('date created', auto_now_add=True)
@@ -27,6 +26,17 @@ class Result(models.Model):
 
 class UntrustedSource(models.Model):
     source_url = models.CharField(max_length = 300)
+
+class Source(models.Model):
+    source_url = models.CharField(max_length = 300)
+
+class Label(models.Model):
+    label = models.CharField('Label', max_length = 100)
+    description = models.CharField('Description', max_length = 500)
+
+class UnreliableSource(models.Model):
+    source = models.ForeignKey(Source, on_delete=models.CASCADE)
+    label = models.ForeignKey(Label, on_delete=models.CASCADE)
 
 
 
