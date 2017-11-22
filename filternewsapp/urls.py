@@ -11,7 +11,7 @@ import home.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'^$', include('home.urls')),
-    url(r'^main/', include('main.urls')),
+    url(r'^', include('main.urls')),
+   # url(r'^main/', include('main.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
