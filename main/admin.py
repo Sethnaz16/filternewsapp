@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, Label
+from .models import Article, Label, UnreliableSource
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -21,6 +21,19 @@ class LabelAdmin(ImportExportModelAdmin):
     ]
     list_display = ('label', 'description')
 
+class UnreliableResources(resources.ModelResource):
+    class Meta:
+        model = UnreliableSource
+
+class UnreliableAdmin(ImportExportModelAdmin):
+    resource_class = UnreliableResources
+    fieldsets = [
+        (None, {'fields': ['source', 'label']}),
+    ]
+    list_display = ('source', 'label')
+
 admin.site.register(Article, ArticleAdmin)
 
 admin.site.register(Label, LabelAdmin)
+
+admin.site.register(UnreliableSource, UnreliableAdmin)
