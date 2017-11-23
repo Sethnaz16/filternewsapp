@@ -34,7 +34,9 @@
     <p> {{ list_summary }}</p>
    
     <b>Videos: </b>
+    {% if data.videos %}
     <p>{{ data.videos }}</p>
+    {% endif %}
  
 </div>
 {% endblock %}

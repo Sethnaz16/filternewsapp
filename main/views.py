@@ -20,6 +20,9 @@ def articles(request):
     context = {'latest_article_list': latest_article_list}
     return render(request, 'main/articles.html', context)
 
+def about(request):
+    return render(request, 'main/about.html')
+
 def detail(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     return render(request, 'main/detail.html', {'article': article })
