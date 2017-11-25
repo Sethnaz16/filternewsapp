@@ -83,79 +83,79 @@ def get_site_labels(article_url):
        
 
 
-def create_label_summary(domain, *labels):
-    summary_list=['']
-    domain = str(domain).capitalize()
+# def create_label_summary(domain, *labels):
+#     summary_list=['']
+#     domain = str(domain).capitalize()
     
-    # Note if label is empty
-    if labels[0] == 'none':
-        return
+#     # Note if label is empty
+#     if labels[0] == 'none':
+#         return
        
-    else:
+#     else:
 
-        for i in labels:
-            if str(i) == 'conspiracy': 
-                descr = """Conspiracy:\tSources that are well-known promoters of kooky conspiracy 
-                    theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems, 
-                    birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind 
-                    control etc."""
-                summary_list.append(descr)
+#         for i in labels:
+#             if str(i) == 'conspiracy': 
+#                 descr = """Conspiracy:\tSources that are well-known promoters of kooky conspiracy 
+#                     theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems, 
+#                     birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind 
+#                     control etc."""
+#                 summary_list.append(descr)
            
-            if i == 'fake':
-                descr = """Fake News:\tSources that entirely fabricate information, disseminate 
-                        deceptive content, and/or grossly distort actual news reports. """
+#             if i == 'fake':
+#                 descr = """Fake News:\tSources that entirely fabricate information, disseminate 
+#                         deceptive content, and/or grossly distort actual news reports. """
 
-                summary_list.append(descr)
+#                 summary_list.append(descr)
             
-            if i == 'unreliable':
-                descr = """Proceed With Caution:\tSources that have been flagged but not yet analyzed."""
-                summary_list.append(descr)
+#             if i == 'unreliable':
+#                 descr = """Proceed With Caution:\tSources that have been flagged but not yet analyzed."""
+#                 summary_list.append(descr)
            
-            if i == 'hate':
-                descr = """Hate Speech:\tSources that actively promote racism, misogyny, homophobia, and other 
-                        forms of discrimination."""
-                summary_list.append(descr)
+#             if i == 'hate':
+#                 descr = """Hate Speech:\tSources that actively promote racism, misogyny, homophobia, and other 
+#                         forms of discrimination."""
+#                 summary_list.append(descr)
             
-            if i == 'junksci':
-                descr = """Junk Science:\tSources that promote pseudoscience, metaphysics, naturalistic 
-                        fallacies, and other scientifically dubious claims."""
-                summary_list.append(descr)
+#             if i == 'junksci':
+#                 descr = """Junk Science:\tSources that promote pseudoscience, metaphysics, naturalistic 
+#                         fallacies, and other scientifically dubious claims."""
+#                 summary_list.append(descr)
             
-            if i == 'satire':
-                descr = """Satire:\tSources that use humor, irony, exaggeration, ridicule, and false 
-                        information to comment on current events. """
-                summary_list.append(descr)
+#             if i == 'satire':
+#                 descr = """Satire:\tSources that use humor, irony, exaggeration, ridicule, and false 
+#                         information to comment on current events. """
+#                 summary_list.append(descr)
            
-            if i == 'bias':
-                descr = """Extreme Bias:\tSources that come from a particular point of view and 
-                        may rely on propaganda, decontextualized information, and opinions distorted 
-                        as facts. """
-                summary_list.append(descr)
+#             if i == 'bias':
+#                 descr = """Extreme Bias:\tSources that come from a particular point of view and 
+#                         may rely on propaganda, decontextualized information, and opinions distorted 
+#                         as facts. """
+#                 summary_list.append(descr)
            
-            if i == 'rumor':
-                descr = """Rumor Mill:\tSources that traffic in rumors, gossip, innuendo, and 
-                        unverified claims."""
-                summary_list.append(descr)
+#             if i == 'rumor':
+#                 descr = """Rumor Mill:\tSources that traffic in rumors, gossip, innuendo, and 
+#                         unverified claims."""
+#                 summary_list.append(descr)
 
-            if i == 'state':
-                descr = """State News:\tSources in repressive states operating under government sanction."""
+#             if i == 'state':
+#                 descr = """State News:\tSources in repressive states operating under government sanction."""
 
-            if i == 'clickbait':
-                descr = """Clickbait:\tSources that are well-known promoters of kooky conspiracy 
-                        theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer 
-                        systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, 
-                        vaccines as mind control etc."""
-                summary_list.append(descr)
+#             if i == 'clickbait':
+#                 descr = """Clickbait:\tSources that are well-known promoters of kooky conspiracy 
+#                         theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer 
+#                         systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, 
+#                         vaccines as mind control etc."""
+#                 summary_list.append(descr)
 
-            if i == 'reliable' or i == 'political':
-                note = """*Note:\tTags like political and credible are being used for two reasons: 
-                        1.) they were suggested by viewers of the document or OpenSources and circulate news 
-                        2.) the credibility of information and of organizations exists on a continuum, which 
-                        this project aims to demonstrate. For now, mainstream news organizations are not 
-                        included because they are well known to a vast majority of readers."""
-                summary_list.append(note)
+#             if i == 'reliable' or i == 'political':
+#                 note = """*Note:\tTags like political and credible are being used for two reasons: 
+#                         1.) they were suggested by viewers of the document or OpenSources and circulate news 
+#                         2.) the credibility of information and of organizations exists on a continuum, which 
+#                         this project aims to demonstrate. For now, mainstream news organizations are not 
+#                         included because they are well known to a vast majority of readers."""
+#                 summary_list.append(note)
     
-    return summary_list 
+#     return summary_list 
         
 
     
