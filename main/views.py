@@ -50,9 +50,12 @@ def analyze(request):
         url = request.POST.get("article_url", "")
         data = lassie.fetch(url)
         domain = get_domain(url)
+        
+        # get labels/tags associated with any sketchy websites
         label_results = result_data(domain)
         source_descr = ''
         
+        # Note whether site is reliable or not
         if label_results == {}:
             #Add statement that site isn't known to be unreliable
             source_descr = result_descr(0)
@@ -85,7 +88,7 @@ def extract_videos(url):
 def result_descr(number):
     result = ""
     if number == 0:
-        result = " current does not have a history of spreading blatant misinformation. While this source can generally be considered trustworthy, it's still always good to seek information from a wide variety of sources."
+        result = " currently does not have a history of publishing misinformation. This source can generally be considered trustworthy, but it's still always good to seek information from a wide variety of sources."
     else:
         result = " has been identified as a potentially unreliable source of news. We suggest taking this article with a grain of salt and recommend searching for related information from other news sources."
     return result
@@ -109,8 +112,7 @@ def result_data(article_domain):
     return domain_labels
 
 
-
-
+# Return the description corresponding to a give site tag
 def label_description(label):
         label1 = str(label)
         label_descriptions = { 
@@ -164,113 +166,12 @@ def label_description(label):
         return label_desc1
 
 
-# def create_label_summary(domain, *labels):
-#     summary_list=['']
-#     domain = str(domain).capitalize()
-    
-#     # Note if label is empty
-#     if labels[0] == 'none':
-#         return
-       
-#     else:
-
-#         for i in labels:
-#             if str(i) == 'conspiracy': 
-#                 descr = """Conspiracy:\tSources that are well-known promoters of kooky conspiracy 
-#                     theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems, 
-#                     birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind 
-#                     control etc."""
-#                 summary_list.append(descr)
-           
-#             if i == 'fake':
-#                 descr = """Fake News:\tSources that entirely fabricate information, disseminate 
-#                         deceptive content, and/or grossly distort actual news reports. """
-
-#                 summary_list.append(descr)
-            
-#             if i == 'unreliable':
-#                 descr = """Proceed With Caution:\tSources that have been flagged but not yet analyzed."""
-#                 summary_list.append(descr)
-           
-#             if i == 'hate':
-#                 descr = """Hate Speech:\tSources that actively promote racism, misogyny, homophobia, and other 
-#                         forms of discrimination."""
-#                 summary_list.append(descr)
-            
-#             if i == 'junksci':
-#                 descr = """Junk Science:\tSources that promote pseudoscience, metaphysics, naturalistic 
-#                         fallacies, and other scientifically dubious claims."""
-#                 summary_list.append(descr)
-            
-#             if i == 'satire':
-#                 descr = """Satire:\tSources that use humor, irony, exaggeration, ridicule, and false 
-#                         information to comment on current events. """
-#                 summary_list.append(descr)
-           
-#             if i == 'bias':
-#                 descr = """Extreme Bias:\tSources that come from a particular point of view and 
-#                         may rely on propaganda, decontextualized information, and opinions distorted 
-#                         as facts. """
-#                 summary_list.append(descr)
-           
-#             if i == 'rumor':
-#                 descr = """Rumor Mill:\tSources that traffic in rumors, gossip, innuendo, and 
-#                         unverified claims."""
-#                 summary_list.append(descr)
-
-#             if i == 'state':
-#                 descr = """State News:\tSources in repressive states operating under government sanction."""
-
-#             if i == 'clickbait':
-#                 descr = """Clickbait:\tSources that are well-known promoters of kooky conspiracy 
-#                         theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer 
-#                         systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, 
-#                         vaccines as mind control etc."""
-#                 summary_list.append(descr)
-
-#             if i == 'reliable' or i == 'political':
-#                 note = """*Note:\tTags like political and credible are being used for two reasons: 
-#                         1.) they were suggested by viewers of the document or OpenSources and circulate news 
-#                         2.) the credibility of information and of organizations exists on a continuum, which 
-#                         this project aims to demonstrate. For now, mainstream news organizations are not 
-#                         included because they are well known to a vast majority of readers."""
-#                 summary_list.append(note)
-    
-#     return summary_list 
-        
-
-    
-# # Display label description results
-# def print_summary(domain):
-# # Display source name    
-#     print("Source of article submitted: %s", domain)
-#         # Only contains domain name 
-#     if list[0] == 'none':  
-#         print("""This article was published by a source with no currently known history of spreading misinformation. """)
-    
-#     else:
-#         print("""%s, the publisher of this article, has been identified a potentially unreliable source of news. 
-#         Some content has been found to fall into the following categories: \n""")
-
-#         for i in list:
-#             print("\t" + str(i))
-
 def get_domain(url):
     article_domain = get_tld(url)
     return str(article_domain).capitalize()
 
 
-# # Analyzes the source and potential crediblity of a news article's publishing source
-# def analyze_article(article_url):
-#     # Article domain/source
-#     domain = get_domain(article_url)
-#     # Searches for tags such as unreliable, satire, politcal, etc.
-#     labels = get_site_labels(article_url)
-#     # Returns the descriptions of any tags related to the source
-#     summary = create_label_summary(domain, *labels)
-#     print_summary(domain, summary)
 
-    
     
 
     

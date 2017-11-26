@@ -4,13 +4,15 @@
 <div class="container">
     <h5>Result for:</h5>
     <a href="{{ data.url }}">{{ data.url }}</a><br/>
-    <p><b>Title: </b>{{ data.title }}</p>
+    <p><b>Title of article: </b>{{ data.title }}</p>
     <p><b>Source: </b>{{ domain }}
-    <p><b>SourceDescription: </b>{{ data.description }}</p>
+    <p><b> Article description: </b>{{ data.description }}</p>
     
     </ul>
-    <div class="row">
-        <!-- if source is considered unreliable-->
+
+    
+    <div class="row"
+        <!-- if source is considered unreliable, display result card as RED-->
         {%if indb == 1%} 
             <div class="col s12 m6">
                 <div class="card red darken-4">
@@ -19,11 +21,11 @@
                         <p>{{ domain }}{{ sourcedescr }}</p>
                     </div>
                     <div class="card-action">
-                        <a href="https://volgenau.gmu.edu/course/view/15851">Course Page</a>
-                        <a href="#">This is a link</a>
+                        <a href="#">Link</a>
                     </div>
                 </div>
                 </div>
+       <!-- display the tags associated with the unreliable source site-->
         <div class="col s12 m6">
             <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
@@ -40,7 +42,7 @@
                 </div> -->
             </div>
         </div>
-         <!-- if source is considered generally reliable-->
+         <!-- if source is considered generally reliable, display result card as GREEN-->
         {%elif indb == 0%}
              <div class="col s12 m6">
                 <div class="card green darken-2">
@@ -49,19 +51,30 @@
                         <p>{{ domain }}{{ sourcedescr }}</p>
                     </div>
                     <div class="card-action">
-                        <a href="https://volgenau.gmu.edu/course/view/15851">Course Page</a>
-                        <a href="#">This is a link</a>
+                       
+                        <a href="#">Add link to submit another article here</a>
                     </div>
                 </div>
                 </div>
+            <div class="col s12 m6">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Keywords from the article</span>
+                    <p><ul>
+                     {% for keyword in data.keywords %}
+                    <li> - {{ keyword }}</li>
+                    {% endfor %}</p><br>
+                 <p><i> These labels are associated with content from {{domain}}</i></p>
+                </div>
+                <!-- <div class="card-action">
+                    <p> Labels associated with content from {{domain}}</p>
+                </div> -->
+            </div>
+        </div>
         {%endif%}
         
     </div>
-<b>Article Keywords:</b>
-    <ul>
-        {% for keyword in data.keywords %}
-        <li>{{ keyword }}</li>
-        {% endfor %}
+    
     {% if data.images %}
     <b>Images: </b>
         <div class="row">
