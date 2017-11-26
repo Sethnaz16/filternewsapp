@@ -4,15 +4,24 @@
 <div class="container">
     <h5>Result for:</h5>
     <a href="{{ data.url }}">{{ data.url }}</a><br/>
+
+    {%if data.title %}
     <p><b>Title: </b>{{ data.title }}</p>
-    
+    {% endif %}
+
+    {% if data.description  %}
     <p><b>Decription: </b>{{ data.description }}</p>
+    {% endif %}
+
+    {% if data.keywords %}
     <b>Keywords:</b>
     <ul>
         {% for keyword in data.keywords %}
         <li>{{ keyword }}</li>
         {% endfor %}
     </ul>
+    {% endif %}
+
     {% if data.images %}
     <b>Images: </b>
         <div class="row">
@@ -30,12 +39,20 @@
         {% endfor %}
         </div>
     {% endif %}
-
+    {% if list_summary %}
     <p> {{ list_summary }}</p>
-   
-    <b>Videos: </b>
+    {% endif %}
+    
     {% if data.videos %}
+    <b>Videos: </b>
     <p>{{ data.videos }}</p>
+    {% endif %}
+
+    {% if labels %}
+    <b>Analysis: </b>
+    {% for domain in labels %}
+    <p>{{  domain.desc }}</p>
+    {% endfor %}
     {% endif %}
  
 </div>

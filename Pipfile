@@ -14,6 +14,8 @@ lassie = "*"
 csvimporter = "*"
 "django-csvimport" = "*"
 "django-import-export" = "*"
+tldextract = "*"
+tld = "*"
 
 [requires]
 python_version = "3.6"

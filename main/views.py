@@ -3,9 +3,6 @@ from django.http import HttpResponse, Http404
 from .models import Article
 from .models import UnreliableSource
 from .forms import AnalyzeForm
-from tld import get_tld
-from tld.utils import update_tld_names
-update_tld_names()
 import datetime 
 from django.utils import timezone
 import json
@@ -13,6 +10,7 @@ import lassie
 import pprint
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 
 # Create your views here.
 def articles(request):
@@ -50,9 +48,77 @@ def analyze(request):
         url = request.POST.get("article_url", "")
         data = lassie.fetch(url)
         extract_videos(url)
-        analyze_article(request.POST.get("article_url", ""))
+        parsed_uri = urlparse(url)
+        #domain = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+        domain = '{uri.netloc}'.format(uri=parsed_uri)
+        query_result = UnreliableSource.objects.filter(source__icontains = domain)
+        labels = label_desc(query_result)
     
-    return render(request, 'main/results.html', {'data': data, 'id': id})
+    return render(request, 'main/results.html', {'data': data, 'id': id, 'labels': labels})
+
+def label_desc(query_result):
+    desc_label = []
+    result = {
+        'label': '',
+        'desc': ''
+    }
+    for query in query_result:
+        if query.label == 'conspiracy':
+            result['label'] = 'conspiracy'  
+            result['desc'] = ('Hate Speech:\tSources that are well-known promoters of kooky conspiracy theories.' + 
+                             ' Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems,' + 
+                             ' birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind control etc')
+        if query.label == 'fake':  
+            result['label'] = 'fake'
+            result['desc'] = ('Fake News:\tSources that entirely fabricate information, disseminate'+ 
+                             'deceptive content, and/or grossly distort actual news reports.')
+        if query.label == 'unreliable': 
+            result['label'] = 'unreliable'
+            result['desc'] = 'Proceed With Caution:\tSources that have been flagged but not yet analyzed.'
+        if query.label == 'hate':  
+            result['label'] = 'hate'
+            result['desc'] = ('Hate Speech:\tSources that actively promote racism, misogyny, homophobia, and other' + 
+                             'forms of discrimination.')
+        if query.label == 'junksci':  
+            result['label'] = 'junksci'
+            result['desc'] = ('Junk Science:\tSources that promote pseudoscience, metaphysics, naturalistic'+ 
+                             'fallacies, and other scientifically dubious claims.')
+        if query.label == 'satire':  
+            result['label'] = 'satire'
+            result['desc'] = ('Satire:\tSources that use humor, irony, exaggeration, ridicule, and false '+
+                             'information to comment on current events.')
+        if query.label == 'bias':  
+            result['label'] = 'bias'
+            result['desc'] = ('Extreme Bias:\tSources that come from a particular point of view and '+
+                             'may rely on propaganda, decontextualized information, and opinions distorted '+
+                             ' as facts. ')
+        if query.label == 'rumor':  
+            result['label'] = 'rumor'
+            result['desc'] = ('Rumor Mill:\tSources that traffic in rumors, gossip, innuendo, and '+
+                             'unverified claims.')
+        if query.label == 'state':  
+            result['label'] = 'state'
+            result['desc'] = ('State News:\tSources in repressive states operating under government sanction.')
+        if query.label == 'clickbait':  
+            result['label'] = 'clickbait'
+            result['desc'] = ('Clickbait:\tSources that are well-known promoters of kooky conspiracy '+
+                             'theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer '+
+                             'systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, '+
+                             'vaccines as mind control etc.')
+        if query.label == 'reliable':  
+            result['label'] = 'reliable'
+            result['desc'] = ('This source is reliable')
+        if query.label == 'political':  
+            result['label'] = 'political'
+            result['desc'] = ('*Note:\tTags like political and credible are being used for two reasons: '+
+                             '1.) they were suggested by viewers of the document or OpenSources and circulate news '+
+                             '2.) the credibility of information and of organizations exists on a continuum, which '+
+                             'this project aims to demonstrate. For now, mainstream news organizations are not '+
+                             'included because they are well known to a vast majority of readers.')
+            
+        desc_label.append(result)
+        
+    return desc_label
 
 def extract_videos(url):
     meet = requests.get(url).text 

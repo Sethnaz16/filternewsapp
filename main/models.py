@@ -23,10 +23,7 @@ class Result(models.Model):
     author = models.CharField(max_length=200, default='author')
     recommend = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
-
-    def get_tags(article):
-
-
+    #def get_tags(article):
 
 
 class UntrustedSource(models.Model):
