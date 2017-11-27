@@ -1,4 +1,5 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
@@ -10,8 +11,8 @@ Types of changes examples:
 -Removed: for now-removed features.
 -Fixed: for any bug fixes.
 -Security: in case of vulnerabilities.
--Adjustments to Requirements: changes made to the underlying project structure that differ
- from the original design
+-Adjustments to Requirements or Architecture: changes made to the underlying project structure 
+ that differ from the original design
 
 *--- Basic changelog form and layout with partial documentation of 
           dev process; not yet complete :)     --Alison ---*
@@ -31,9 +32,6 @@ Types of changes examples:
 -Design alignment and display improvements
 
 
-### Removed
--
-
 ### Fixed 
 -Errors with unsupported Python packages
 
@@ -45,12 +43,11 @@ Types of changes examples:
 -About page
 -Search and parse functionality for article search
 -Source label association; extraction of results from database
+-Source data to databases
 
 ### Changed
---Design alignment and display improvements
-
-### Removed
--
+-Design alignment and display improvements
+-Some html templates
 
 ### Fixed 
 -Errors with unsupported Python packages
@@ -61,12 +58,13 @@ Types of changes examples:
 ## [0.0.4] - Week of 2017-11-13
 
 ### Added
-
 -Created source tables, added csv data for UnreliableSource model
 -Basic Material Design front-end display
 -Import-export functionality for csv data
 -Design alignment and display improvements
 -Model to store previously submitted articles
+-Result, article, and other html templates
+
 
 ### Changed
 --Form updates 
