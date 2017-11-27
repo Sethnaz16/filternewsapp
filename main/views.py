@@ -11,6 +11,7 @@ import pprint
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+import tldextract
 
 # Create your views here.
 def articles(request):
@@ -65,8 +66,9 @@ def analyze(request):
         # # key-value pairs
       
         extract_videos(url)
-        parsed_uri = urlparse(url)
-        domain = '{uri.netloc}'.format(uri=parsed_uri)
+        # parsed_uri = urlparse(url)
+        # domain = '{uri.netloc}'.format(uri=parsed_uri)
+        domain = get_domain(url)
         query_result = UnreliableSource.objects.filter(source__iexact= domain)  # Had to change to iexact, because some sites were 
                                                                                 # slightly altered versions of valid sites.
                                                                                 #e.g. "washingtonpost.com" vs "washingtonpost.com.co"
@@ -162,6 +164,11 @@ def extract_videos(url):
     for i in videos:
         print (str(i))
 
+def get_domain(url):
+    ext = tldextract.extract(url)
+    article_domain = ext.registered_domain 
+    return str(article_domain).capitalize()
+
 # def result_descr(number):
 #     result = ""
 #     if number == 0:
@@ -243,9 +250,7 @@ def extract_videos(url):
 #         return label_desc1
 
 
-# def get_domain(url):
-#     article_domain = get_tld(url)
-#     return str(article_domain).capitalize()
+ 
 
 
 

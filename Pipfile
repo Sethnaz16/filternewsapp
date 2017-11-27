@@ -16,6 +16,7 @@ csvimporter = "*"
 "django-import-export" = "*"
 tldextract = "*"
 tld = "*"
+"requests-file"="*"
 
 [requires]
 python_version = "3.6"
