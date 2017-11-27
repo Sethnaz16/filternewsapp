@@ -7,28 +7,32 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <!--<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
 </head>
 <body>
 <nav class="navbar navbar-default navbar-static-top navbar-inverse blue darken-3">
   <div class="container">
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
+    <ul class="left">
+      <li class="tooltipped valign-wrapper" data-position="bottom" data-tooltip="HOMEPAGE">
+        <a href="/"><i class="material-icons">home</i></a>
       </li>
-      <li >
-        <a href="/articles">Tested Articles</a>
-      </li>
-      <li >
-        <a href="/about">About Us</a>
-      </li>
+    </ul>
+    <ul class="right">
+      <li class="tooltipped valign-wrapper" data-position="bottom" data-tooltip="OUR TEAM"><a href="#" data-activates="our-team" class="act-mod"><i class="material-icons">group</i></a></li>
+      <li class="tooltipped valign-wrapper" data-position="bottom" data-tooltip="HOW APP WORKS"><a href="#" data-activates="how-work" class="act-mod"><i class="material-icons">import_contacts</i></a></li>
+      <li class="tooltipped valign-wrapper" data-position="bottom" data-tooltip="FAQS"><a href="#" data-activates="faq" class="act-mod"><i class="material-icons">help</i></a></li>
     </ul>
   </div>
 </nav>
+{% include "main/sidemodal.html" %}  
 
 {% block content %}{% endblock %}
 
 <!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script type="text/javascript" src="{% static 'main/script.js' %}"></script>
 </body>
 </html>
