@@ -68,13 +68,7 @@ def analyze(request):
         extract_videos(url)
       
     
-    return render(request, 'main/results.html', { 'data': data, 
-                                                  'id': id, 
-                                                  'domain' : domain,
-                                                  'labelinfo' : label_results, 
-                                                  'sourcedescr' : source_descr,
-                                                  'indb' : is_in_db
-                                                 })
+    return render(request, 'main/results.html', { 'data': data, 'id': id, 'domain' : domain,'labelinfo' : label_results, 'sourcedescr' : source_desc, 'indb' : is_in_db})
 
 def extract_videos(url):
     meet = requests.get(url).text 
