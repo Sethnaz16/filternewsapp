@@ -48,113 +48,33 @@ def analyze(request):
         p.result_set.create(author='Sith', recommend=True, rating=3)
         url = request.POST.get("article_url", "")
         data = lassie.fetch(url)
-        # domain = get_domain(url)
+        domain = get_domain(url)
         
-        # # get labels/tags associated with any sketchy websites
-        # label_results = result_data(domain)
-        # source_descr = ''
-        
-        # # Note whether site is reliable or not
-        # if label_results == {}:
-        #     #Add statement that site isn't known to be unreliable
-        #     source_descr = result_descr(0)
-        #     is_in_db = 0
-        # else:
-        #     # Add statement that site is unreliable
-        #     source_descr = result_descr(1)
-        #     is_in_db = 1
-        # # key-value pairs
+        # get labels/tags associated with any sketchy websites
+        label_results = result_data(domain)
+        source_descr = ''
+        is_in_db= ''
+        # Note whether site is reliable or not
+        if label_results == {}:
+            #Add statement that site isn't known to be unreliable
+            source_descr = result_descr(0)
+            is_in_db = 0
+        else:
+            # Add statement that site is unreliable
+            source_descr = result_descr(1)
+            is_in_db = 1
+        # key-value pairs
       
         extract_videos(url)
-        # parsed_uri = urlparse(url)
-        # domain = '{uri.netloc}'.format(uri=parsed_uri)
-        domain = get_domain(url)
-        query_result = UnreliableSource.objects.filter(source__iexact= domain)  # Had to change to iexact, because some sites were 
-                                                                                # slightly altered versions of valid sites.
-                                                                                #e.g. "washingtonpost.com" vs "washingtonpost.com.co"
-        labels = label_desc(query_result)
+      
     
-    return render(request, 'main/results.html', {'data': data, 'id': id, 'labels': labels})
-
-# remove duplcated objects and return
-def remove_dups(json_data):
-    unique_data = { each['label'] : each for each in json_data }.values()
-    return unique_data
-
-# attach each description and return
-def label_desc(query_result):
-    desc_label = []
-    result = {
-        'label': '',
-        'desc': ''
-    }
-    # if empty
-    if not query_result:
-        print('Empty')
-        result['label'] = 'unknown'
-        result['desc'] = 'Unknown:\tCannot determine the description for this source'
-    else:
-        for query in query_result:
-            if query.label == 'conspiracy':
-                result['label'] = 'conspiracy'  
-                result['desc'] = ('Hate Speech:\tSources that are well-known promoters of kooky conspiracy theories.' + 
-                                ' Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems,' + 
-                                ' birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind control etc')
-            if query.label == 'fake':  
-                result['label'] = 'fake'
-                result['desc'] = ('Fake News:\tSources that entirely fabricate information, disseminate'+ 
-                                'deceptive content, and/or grossly distort actual news reports.')
-            if query.label == 'unreliable': 
-                result['label'] = 'unreliable'
-                result['desc'] = 'Unreliable:\tProceed With Caution:\tSources that have been flagged but not yet analyzed.'
-            if query.label == 'hate':  
-                result['label'] = 'hate'
-                result['desc'] = ('Hate Speech:\tSources that actively promote racism, misogyny, homophobia, and other' + 
-                                'forms of discrimination.')
-            if query.label == 'junksci':  
-                result['label'] = 'junksci'
-                result['desc'] = ('Junk Science:\tSources that promote pseudoscience, metaphysics, naturalistic'+ 
-                                'fallacies, and other scientifically dubious claims.')
-            if query.label == 'satire':  
-                result['label'] = 'satire'
-                result['desc'] = ('Satire:\tSources that use humor, irony, exaggeration, ridicule, and false '+
-                                'information to comment on current events.')
-            if query.label == 'bias':  
-                result['label'] = 'bias'
-                result['desc'] = ('Extreme Bias:\tSources that come from a particular point of view and '+
-                                'may rely on propaganda, decontextualized information, and opinions distorted '+
-                                ' as facts. ')
-            if query.label == 'rumor':  
-                result['label'] = 'rumor'
-                result['desc'] = ('Rumor Mill:\tSources that traffic in rumors, gossip, innuendo, and '+
-                                'unverified claims.')
-            if query.label == 'state':  
-                result['label'] = 'state'
-                result['desc'] = ('State News:\tSources in repressive states operating under government sanction.')
-            if query.label == 'clickbait':  
-                result['label'] = 'clickbait'
-                result['desc'] = ('Clickbait:\tSources that are well-known promoters of kooky conspiracy '+
-                                'theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer '+
-                                'systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, '+
-                                'vaccines as mind control etc.')
-            if query.label == 'reliable':  
-                result['label'] = 'reliable'
-                result['desc'] = ('This source is reliable')
-            if query.label == 'political':  
-                result['label'] = 'political'
-                result['desc'] = ('*Note:\tTags like political and credible are being used for two reasons: '+
-                                '1.) they were suggested by viewers of the document or OpenSources and circulate news '+
-                                '2.) the credibility of information and of organizations exists on a continuum, which '+
-                                'this project aims to demonstrate. For now, mainstream news organizations are not '+
-                                'included because they are well known to a vast majority of readers.')
-            if not query_result:
-                result['label'] = 'unknown'
-                result['desc'] = 'Unknown:\tCannot determine the description for this article'
-            
-    desc_label.append(result)
-    desc_label = remove_dups(desc_label)
-        
-    return desc_label
+    return render(request, 'main/results.html', { 'data': data, 
+                                                  'id': id, 
+                                                  'domain' : domain,
+                                                  'labelinfo' : label_results, 
+                                                  'sourcedescr' : source_descr,
+                                                  'indb' : is_in_db
+                                                 })
 
 def extract_videos(url):
     meet = requests.get(url).text 
@@ -164,10 +84,212 @@ def extract_videos(url):
     for i in videos:
         print (str(i))
 
+def result_descr(number):
+    result = ""
+    if number == 0:
+        result = " currently does not have a history of publishing misinformation. This source can generally be considered trustworthy, but it's still always good to seek information from a wide variety of sources."
+    else:
+        result = " has been identified as a potentially unreliable source of news. We suggest taking this article with a grain of salt and recommend searching for related information from other news sources."
+    return result
+
+# Checks if submitted URL contained in source list database
+# returns json of labels and descriptions
+def result_data(article_domain):
+
+    # Search for domain in database
+    query_result = UnreliableSource.objects.filter(source__iexact = article_domain)
+    # Extract labels/tags attached to each domain in database
+    
+
+    domain_labels = {}
+    if query_result:  
+        # first item in list is site domain
+        # subsequent items are site tags  
+        for i in query_result:
+            label = i.label.capitalize()
+            desc = label_description(label)
+            domain_labels[label] = desc
+
+    return domain_labels
+
 def get_domain(url):
     ext = tldextract.extract(url)
     article_domain = ext.registered_domain 
-    return str(article_domain).capitalize()
+    return str(article_domain.capitalize())
+
+
+# Return the description corresponding to a give site tag
+def label_description(label):
+        label_descriptions = { 
+                        'conspiracy' : """Conspiracy: Sources that are well-known promoters of kooky conspiracy 
+                        theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems, 
+                        birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind 
+                        control etc.""",
+                        
+                        'fake' : """Fake News: Sources that entirely fabricate information, disseminate 
+                            deceptive content, and/or grossly distort actual news reports. """,
+                        
+                        'unreliable' : """Proceed With Caution: Sources that have been flagged but not yet analyzed.""",
+                        
+                        'hate' : """Hate Speech: Sources that actively promote racism, misogyny, homophobia, and other 
+                            forms of discrimination.""",
+
+                        'junksci' : """Junk Science: Sources that promote pseudoscience, metaphysics, naturalistic 
+                            fallacies, and other scientifically dubious claims.""",
+
+                        'satire' : """Satire: Sources that use humor, irony, exaggeration, ridicule, and false 
+                            information to comment on current events. """,
+
+                        'bias' :  """Extreme Bias: Sources that come from a particular point of view and 
+                            may rely on propaganda, decontextualized information, and opinions distorted as facts. """,
+
+                        'rumor' : """Rumor Mill: Sources that traffic in rumors, gossip, innuendo, and 
+                            unverified claims.""",
+
+                        'state' : """State News: Sources in repressive states operating under government sanction.""",
+
+                        'clickbait' : """Clickbait: Sources that are well-known promoters of kooky conspiracy 
+                            theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer 
+                            systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, 
+                            vaccines as mind control etc.""",
+
+                        'reliable' : """Political — Tags like political and credible are being used for two reasons: 
+                            1.) they were suggested by viewers of the document or OpenSources and circulate news 
+                            2.) the credibility of information and of organizations exists on a continuum, which 
+                            this project aims to demonstrate. For now, mainstream news organizations are not 
+                            included because they are well known to a vast majority of readers.""",
+
+                        'political' : """Political — Tags like political and credible are being used for two reasons: 
+                            1.) they were suggested by viewers of the document or OpenSources and circulate news 
+                            2.) the credibility of information and of organizations exists on a continuum, which 
+                            this project aims to demonstrate. For now, mainstream news organizations are not 
+                            included because they are well known to a vast majority of readers."""
+
+        }
+        desc = ''
+        if label in label_descriptions:
+            desc = label_descriptions[label]
+        return desc
+# def analyze(request):
+#     if request.method == 'POST':
+#         q = Article(article_url=request.POST.get("article_url", ""), pub_date=timezone.now())
+#         q.save()
+        
+#         id = q.id
+#         p = Article.objects.get(pk=id)
+#         p.result_set.all() 
+#         p.result_set.create(author='Sith', recommend=True, rating=3)
+#         url = request.POST.get("article_url", "")
+#         data = lassie.fetch(url)
+#         # domain = get_domain(url)
+        
+#         # # get labels/tags associated with any sketchy websites
+#         # label_results = result_data(domain)
+#         # source_descr = ''
+        
+#         # # Note whether site is reliable or not
+#         # if label_results == {}:
+#         #     #Add statement that site isn't known to be unreliable
+#         #     source_descr = result_descr(0)
+#         #     is_in_db = 0
+#         # else:
+#         #     # Add statement that site is unreliable
+#         #     source_descr = result_descr(1)
+#         #     is_in_db = 1
+#         # # key-value pairs
+      
+#         extract_videos(url)
+#         # parsed_uri = urlparse(url)
+#         # domain = '{uri.netloc}'.format(uri=parsed_uri)
+#         domain = get_domain(url)
+#         query_result = UnreliableSource.objects.filter(source__iexact= domain)  # Had to change to iexact, because some sites were 
+#                                                                                 # slightly altered versions of valid sites.
+#                                                                                 #e.g. "washingtonpost.com" vs "washingtonpost.com.co"
+#         labels = label_desc(query_result)
+    
+#     return render(request, 'main/results.html', {'data': data, 'id': id, 'labels': labels, 'domain' : domain})
+
+# # remove duplcated objects and return
+# def remove_dups(json_data):
+#     unique_data = { each['label'] : each for each in json_data }.values()
+#     return unique_data
+
+# # attach each description and return
+# def label_desc(query_result):
+#     desc_label = []
+#     result = {
+#         'label': '',
+#         'desc': ''
+#     }
+#     # if empty
+#     if not query_result:
+#         print('Empty')
+#         result['label'] = 'unknown'
+#         result['desc'] = 'Unknown:\tCannot determine the description for this source'
+#     else:
+#         for query in query_result:
+#             if query.label == 'conspiracy':
+#                 result['label'] = 'conspiracy'  
+#                 result['desc'] = ('Hate Speech:\tSources that are well-known promoters of kooky conspiracy theories.' + 
+#                                 ' Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems,' + 
+#                                 ' birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind control etc')
+#             if query.label == 'fake':  
+#                 result['label'] = 'fake'
+#                 result['desc'] = ('Fake News:\tSources that entirely fabricate information, disseminate'+ 
+#                                 'deceptive content, and/or grossly distort actual news reports.')
+#             if query.label == 'unreliable': 
+#                 result['label'] = 'unreliable'
+#                 result['desc'] = 'Unreliable:\tProceed With Caution:\tSources that have been flagged but not yet analyzed.'
+#             if query.label == 'hate':  
+#                 result['label'] = 'hate'
+#                 result['desc'] = ('Hate Speech:\tSources that actively promote racism, misogyny, homophobia, and other' + 
+#                                 'forms of discrimination.')
+#             if query.label == 'junksci':  
+#                 result['label'] = 'junksci'
+#                 result['desc'] = ('Junk Science:\tSources that promote pseudoscience, metaphysics, naturalistic'+ 
+#                                 'fallacies, and other scientifically dubious claims.')
+#             if query.label == 'satire':  
+#                 result['label'] = 'satire'
+#                 result['desc'] = ('Satire:\tSources that use humor, irony, exaggeration, ridicule, and false '+
+#                                 'information to comment on current events.')
+#             if query.label == 'bias':  
+#                 result['label'] = 'bias'
+#                 result['desc'] = ('Extreme Bias:\tSources that come from a particular point of view and '+
+#                                 'may rely on propaganda, decontextualized information, and opinions distorted '+
+#                                 ' as facts. ')
+#             if query.label == 'rumor':  
+#                 result['label'] = 'rumor'
+#                 result['desc'] = ('Rumor Mill:\tSources that traffic in rumors, gossip, innuendo, and '+
+#                                 'unverified claims.')
+#             if query.label == 'state':  
+#                 result['label'] = 'state'
+#                 result['desc'] = ('State News:\tSources in repressive states operating under government sanction.')
+#             if query.label == 'clickbait':  
+#                 result['label'] = 'clickbait'
+#                 result['desc'] = ('Clickbait:\tSources that are well-known promoters of kooky conspiracy '+
+#                                 'theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer '+
+#                                 'systems, birther rumors, flat earth ‘theory,’ fluoride as mind control, '+
+#                                 'vaccines as mind control etc.')
+#             if query.label == 'reliable':  
+#                 result['label'] = 'reliable'
+#                 result['desc'] = ('This source is reliable')
+#             if query.label == 'political':  
+#                 result['label'] = 'political'
+#                 result['desc'] = ('*Note:\tTags like political and credible are being used for two reasons: '+
+#                                 '1.) they were suggested by viewers of the document or OpenSources and circulate news '+
+#                                 '2.) the credibility of information and of organizations exists on a continuum, which '+
+#                                 'this project aims to demonstrate. For now, mainstream news organizations are not '+
+#                                 'included because they are well known to a vast majority of readers.')
+#             if not query_result:
+#                 result['label'] = 'unknown'
+#                 result['desc'] = 'Unknown:\tCannot determine the description for this article'
+            
+#     desc_label.append(result)
+#     desc_label = remove_dups(desc_label)
+        
+#     return desc_label
+
+
 
 # def result_descr(number):
 #     result = ""
