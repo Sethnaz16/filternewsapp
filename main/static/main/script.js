@@ -3,8 +3,15 @@ $('.tooltipped').tooltip();
     // This will remove the tooltip functionality for the buttons on this page
 $('.tooltipped').tooltip('remove');
 
-  $(".act-mod").sideNav({
+  $(".act-mod-left").sideNav({
     menuWidth: 350,
+    edge: 'left', // Choose the horizontal origin
+    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+    draggable: true, // Choose whether you can drag to open on touch screens,
+  });
+
+  $(".act-mod-right").sideNav({
+    menuWidth: 500,
     edge: 'right', // Choose the horizontal origin
     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
     draggable: true, // Choose whether you can drag to open on touch screens,
