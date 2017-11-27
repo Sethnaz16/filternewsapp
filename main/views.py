@@ -67,7 +67,9 @@ def analyze(request):
         extract_videos(url)
         parsed_uri = urlparse(url)
         domain = '{uri.netloc}'.format(uri=parsed_uri)
-        query_result = UnreliableSource.objects.filter(source__icontains = domain)
+        query_result = UnreliableSource.objects.filter(source__iexact= domain)  # Had to change to iexact, because some sites were 
+                                                                                # slightly altered versions of valid sites.
+                                                                                #e.g. "washingtonpost.com" vs "washingtonpost.com.co"
         labels = label_desc(query_result)
     
     return render(request, 'main/results.html', {'data': data, 'id': id, 'labels': labels})
