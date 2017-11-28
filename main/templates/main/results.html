@@ -2,118 +2,113 @@
 {% load staticfiles %}
 {% block content %}
 
-<div class="container">
-    <br><br>
+<div class="container"><br><br>
     <div class="section center-align">
         <div class="col s12">
-        <h2 class="blue-text darken-4 ">How's my source?</h2>
-            <p><h5>{%if indb == 1 %} Looking a bit iffy, unfortunately</p></h5>
+            <h2 class="blue-text darken-4 ">How's my source?</h2>
+            <p><h5>{%if indb == 1 %} Looking a bit iffy, unfortunately</h5></p>
             {%elif indb == 0 %} <p><h5>Looks pretty good! </h5></p>{%endif%}
         </div>
-  </div>
-    <br><br>
-     <h5 class="grey-text darken-2">Article Information</h5>
-          <div class="divider"></div>
-     <br>
-<div class="row">
-     <div class="col s6">
-    <p><b>Source: </b>{{ domain }}</p>
-        <p><b>Title:  </b><a href="{{ data.url }}">{{ data.title }}</a><br/></p>
-        <p><b>Summary: </b>{{ data.description }}</p>
-   
-    
-   
     </div>
+    <br><br>
+    <h5 class="grey-text darken-2">Article Information</h5>
+    
+    <div class="divider"></div>
+    <br>
+    <div class="row">
+        <div class="col s6">
+            <p><b>Source: </b>{{ domain }}</p>
+            <p><b>Title:  </b><a href="{{ data.url }}">{{ data.title }}</a><br/></p>
+            <p><b>Summary: </b>{{ data.description }}</p>
+        </div>
 
-    <div class="col s6">
-        <p><b>Keywords: </b>
-        <ul>
-            {% for keyword in data.keywords %}
+        <div class="col s6">
+            <p><b>Keywords: </b></p>
+            <ul>
+                {% for keyword in data.keywords %}
                 <li>{{ keyword }}</li>
             {% endfor %}</ul>
-    </p>
-         
+        </div>
     </div>
-</div>
-<div class="divider"></div>
-<br>
-<br>
+    <div class="divider"></div>
+    <br>
+    <br>
     <div class="row">
         <!-- if source is considered unreliable, display result card as RED-->
         {%if indb == 1%} 
-            <div class="col s12 orange darken-4 white-text center-align">
-                <div class="section"><h4>Analysis</h4>
-                        <p>{{ domain }}{{ sourcedescr }}</p>
-                </div>
+        <div class="col s12 orange darken-4 white-text center-align">
+            <div class="section"><h4>Analysis</h4>
+                <p>{{ domain }}{{ sourcedescr }}</p>
             </div>
+        </div>
     </div>
 
-<div class="row">
-    <div class="section"><h5 class="center-align"><b>Content tags related to this source ({{domain}})</b></h5>
-                        <p><ul>
-                        {% for value in labelinfo %}
-                           <h6> <li class="center-align">{{ value }}  </li></h6>
-                        {% endfor %}
-                    </ul></p>
-                </div>      
-</div>
     <div class="row">
-       <!-- display the tags associated with the unreliable source site-->
-        
-        
-         <!-- if source is considered generally reliable, display result card as GREEN-->
-        {%elif indb == 0%}
-            <div class="row">
-            <div class="col s12 blue darken-2 white-text center-align >
-
-                   <div class="section"><h4>Analysis </h4>
-                        <p>{{ domain }}{{ sourcedescr }}</p>
-                    </div>
-                   
-                    
-                </div>
-            </div>
-            
-        {%endif%}
-        
+        <div class="section"><h5 class="center-align">Content tags ({{domain}})</h5>
+            <p><ul>
+                {% for value in labelinfo %}
+                <h6> <li class="center-align">{{ value }}  </li></h6>
+                {% endfor %}
+            </ul></p>
+        </div>      
     </div>
+   
+     <!-- display the tags associated with the unreliable source site-->
+
+
+     <!-- if source is considered generally reliable, display result card as GREEN-->
+     {%elif indb == 0%}
+     <div class="row">
+        <div class="col s12 blue darken-2 white-text center-align >
+
+         <div class="section"><h4>Analysis </h4>
+            <p>{{ domain }}{{ sourcedescr }}</p>
+        </div>
+
+
+    </div>
+</div>
+
+{%endif%}
+
+</div>
 <div class="container grey lighten-2">
     <div class="row">
         <div class="section center-align ">
-        <h5> What are content tags?</h5>
+            <h5> What are content tags?</h5>
             
-        <br> 
+            <br> 
             <p>Tags, or site labels, describe the reasons why a particular site may be considered unreliable. </p>
-        
-        <p>List label descriptions here. Better formatting for page to come</p>
+
+            <p>List label descriptions here. Better formatting for page to come</p>
+        </div>
     </div>
 </div>
-</div>
-    <br>
-    {% if data.images %}
-    <b>Images: </b>
-        <div class="row">
-        {% for image in data.images %}
-            <div class="col s12 m3">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{ image.src }}">
-                    </div>
-                    <div class="card-content">
-                        <p>Image {{ forloop.counter }}</p>
-                    </div>
-                </div>
+<br>
+{% if data.images %}
+<b>Images: </b>
+<div class="row">
+    {% for image in data.images %}
+    <div class="col s12 m3">
+        <div class="card">
+            <div class="card-image">
+                <img src="{{ image.src }}">
             </div>
-        {% endfor %}
+            <div class="card-content">
+                <p>Image {{ forloop.counter }}</p>
+            </div>
         </div>
-    {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 
-    
-   
-    <b>Videos: </b>
-    {% if data.videos %}
-    <p>{{ data.videos }}</p>
-    {% endif %}
- 
+
+
+<b>Videos: </b>
+{% if data.videos %}
+<p>{{ data.videos }}</p>
+{% endif %}
+
 </div>
 {% endblock %}

@@ -115,7 +115,15 @@ def get_domain(url):
 # Return the description corresponding to a give site tag
 def label_description(label):
         label = str(label)
-        label_descriptions = { 
+        label_descriptions = label_info()
+        
+        desc = ''
+        if label in label_descriptions:
+            desc = label_descriptions[label]
+        return desc
+
+def label_info():
+    label_descriptions = { 
                         'conspiracy' : """Conspiracy: Sources that are well-known promoters of kooky conspiracy 
                         theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems, 
                         birther rumors, flat earth ‘theory,’ fluoride as mind control, vaccines as mind 
@@ -159,12 +167,9 @@ def label_description(label):
                             2.) the credibility of information and of organizations exists on a continuum, which 
                             this project aims to demonstrate. For now, mainstream news organizations are not 
                             included because they are well known to a vast majority of readers."""
-
-        }
-        desc = ''
-        if label in label_descriptions:
-            desc = label_descriptions[label]
-        return desc
+                        }
+    return label_descriptions
+    
 # def analyze(request):
 #     if request.method == 'POST':
 #         q = Article(article_url=request.POST.get("article_url", ""), pub_date=timezone.now())
