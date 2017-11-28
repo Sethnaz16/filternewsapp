@@ -10,7 +10,7 @@
             {%elif indb == 0 %} <p><h5>Looks pretty good! </h5></p>{%endif%}
         </div>
     </div>
-    <br><br>
+    <br>
     <h5 class="grey-text darken-2">Article Information</h5>
     
     <div class="divider"></div>
@@ -59,7 +59,7 @@
      <!-- if source is considered generally reliable, display result card as GREEN-->
      {%elif indb == 0%}
      <div class="row">
-        <div class="col s12 blue darken-2 white-text center-align >
+        <div class="col s12 blue darken-2 white-text center-align" >
 
          <div class="section"><h4>Analysis </h4>
             <p>{{ domain }}{{ sourcedescr }}</p>
@@ -72,9 +72,9 @@
 {%endif%}
 
 </div>
-<div class="container grey lighten-2">
+<div class="container col s12 grey lighten-2">
     <div class="row">
-        <div class="section center-align ">
+        <div class="section col s12 center-align ">
             <h5> What are content tags?</h5>
             
             <br> 
@@ -85,9 +85,11 @@
     </div>
 </div>
 <br>
+<div class="divider"></div>
 {% if data.images %}
 <b>Images: </b>
 <div class="row">
+
     {% for image in data.images %}
     <div class="col s12 m3">
         <div class="card">
@@ -95,7 +97,7 @@
                 <img src="{{ image.src }}">
             </div>
             <div class="card-content">
-                <p>Image {{ forloop.counter }}</p>
+                <!-- <p>Image {{ forloop.counter }}</p> -->
             </div>
         </div>
     </div>
@@ -103,11 +105,22 @@
 </div>
 {% endif %}
 
-
-
-<b>Videos: </b>
+<div class="divider"></div>
 {% if data.videos %}
-<p>{{ data.videos }}</p>
+<b>Videos: </b>
+<br/>
+    {% for vid in data.videos %}
+        {% if '.mp4' in vid.src %}
+        <video width="512" height="290" controls>
+            <source src="{{ vid.src }}" type="video/mp4">
+            <source src="{{ vid.src }}" type="video/ogg">
+            <source src="{{ vid.src }}" type="video/webm">
+        </video>
+        {% endif %}
+        <iframe width="512" height="290"
+        src="{{ vid.src }}">
+        </iframe>
+    {% endfor %}
 {% endif %}
 
 </div>
