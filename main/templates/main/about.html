@@ -1,4 +1,5 @@
 {% load staticfiles %}
+
 <div class="row">
     <div class="col s12 m12">
         <p></p>
@@ -7,10 +8,12 @@
 </div>
 <div class="row">
     <div class="col s12 m12">
-        <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
+        <div class="card blue darken-4">
+            <div class="card-content white-text ">
                 <span class="card-title">Who are we?</span>
-                <p>We are a project group in George Mason University's CS 321 course. Below you can see quotes that vaguely relate to our mission, because that's what all the cool startups are doing.</p>
+                <div class="divider grey lighten-2"></div>
+                <br>
+                <p>We are a group of students at George Mason University who created this site as part of a semester-long project for a software engineering course (CS 321). Below you can see quotes that vaguely relate to our mission, because that's what all the cool startups are doing.</p>
             </div>
             <div class="card-action">
                 <a href="https://volgenau.gmu.edu/course/view/15851">Course Page</a>
@@ -21,24 +24,25 @@
         <p><font size="5.85">"Better slip with foot than tongue."<br></font><font size="4.5"> - Benjamin Franklin</font><br><br>
             <font size = "5">"Say what you have to say, not what you ought. Any truth is better than make-believe."</font><br>
             <font size="4.5">- Henry David Thoreau</font></p>
-    </div>
-</div>
-<div class = "row">
-    <div class="col s12 m12">
-        <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-                <span class="card-title">Why we made the filternews app</span>
-                <p>In this day and age, fake news is everywhere. When you can't be sure a news source is telling the truth or
-                    seeking political or monetary gain, the average citizen is hurt the most. This leaves the need for a way to check
-                    if a given news source is reliable or not. Group #9 has developed just such a web application so you too can
-                    determine if a news source is feeding you facts, or fiction.</p>
-            </div>
-            <div class="card-action">
-                <a href="https://docs.google.com/document/d/10eA5-mCZLSS4MQY5QGb5ewC3VAL6pLkT53V_81ZyitM/preview">News source documentation provided by Melissa Zimdars</a>
-            </div>
         </div>
     </div>
-    <div class ="col s12 m12">
-        <img src = "{% static 'main/images/9.png' %}" alt="Group nine" style="width:100%;height:100%;">
+    <div class = "row">
+        <div class="col s12 m12">
+            <div class="card blue darken-4 white-text">
+                <div class="card-content ">
+                    <span class="card-title">Why we created Check Your Source</span>
+                    <div class="divider grey lighten-2"></div>
+                    <br>
+                    <p>In this day and age, "fake news" is everywhere. When you can't be sure whether a news source is telling the truth or 
+                    seeking political or monetary gain, the average citizen is hurt the most.</p><br>
+                    <p> We need ways to help verify the accuracy of our news that are easily accessible and clearly understood. We have developed just such a tool so that you too can determine whether you're being fed facts, or fiction.</p>
+                </div>
+                <div class="card-action">
+                    <a href="https://docs.google.com/document/d/10eA5-mCZLSS4MQY5QGb5ewC3VAL6pLkT53V_81ZyitM/preview">News source documentation provided by Melissa Zimdars</a>
+                </div>
+            </div>
+        </div>
+        <div class ="col s12 m12">
+            <img src = "{% static 'main/images/9.png' %}" alt="Group nine" style="width:100%;height:100%;">
+        </div>
     </div>
-</div>
