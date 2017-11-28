@@ -68,7 +68,7 @@ def analyze(request):
         extract_videos(url)
       
     
-    return render(request, 'main/results.html', { 'data': data, 'id': id, 'domain' : domain,'labelinfo' : label_results, 'sourcedescr' : source_desc, 'indb' : is_in_db})
+    return render(request, 'main/results.html', { 'data': data, 'id': id, 'domain' : domain,'labelinfo' : label_results, 'sourcedescr' : source_descr, 'indb' : is_in_db})
 
 def extract_videos(url):
     meet = requests.get(url).text 
@@ -95,7 +95,7 @@ def result_data(article_domain):
     # Extract labels/tags attached to each domain in database
     
 
-    domain_labels = {}
+    domain_labels = { }
     if query_result:  
         # first item in list is site domain
         # subsequent items are site tags  
@@ -114,6 +114,7 @@ def get_domain(url):
 
 # Return the description corresponding to a give site tag
 def label_description(label):
+        label = str(label)
         label_descriptions = { 
                         'conspiracy' : """Conspiracy: Sources that are well-known promoters of kooky conspiracy 
                         theories. Ex: 9/11 conspiracies, chem-trails, lizard people in the sewer systems, 

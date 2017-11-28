@@ -1,80 +1,94 @@
 {% extends "main/base.html" %}
 {% load staticfiles %}
 {% block content %}
+
 <div class="container">
     <br><br>
-    <h4>Results</h4>
-    <br>
+    <div class="section center-align">
+        <div class="col s12">
+        <h2 class="blue-text darken-4 ">How's my source?</h2>
+            <p><h5>{%if indb == 1 %} Looking a bit iffy, unfortunately</p></h5>
+            {%elif indb == 0 %} <p><h5>Looks pretty good! </h5></p>{%endif%}
+        </div>
+  </div>
+    <br><br>
+     <h5 class="grey-text darken-2">Article Information</h5>
+          <div class="divider"></div>
+     <br>
+<div class="row">
+     <div class="col s6">
+    <p><b>Source: </b>{{ domain }}</p>
+        <p><b>Title:  </b><a href="{{ data.url }}">{{ data.title }}</a><br/></p>
+        <p><b>Summary: </b>{{ data.description }}</p>
+   
     
-    <p><b>Title of article: </b><a href="{{ data.url }}">{{ data.title }}</a><br/></p>
-    <p><b>Source: </b>{{ domain }}
-    <p><b>Article description: </b>{{ data.description }}</p>
-    <p><b>Article keywords: </b>
+   
+    </div>
+
+    <div class="col s6">
+        <p><b>Keywords: </b>
         <ul>
             {% for keyword in data.keywords %}
-                <li> - {{ keyword }}</li>
+                <li>{{ keyword }}</li>
             {% endfor %}</ul>
     </p>
-    
-
-    
+         
+    </div>
+</div>
+<div class="divider"></div>
+<br>
+<br>
     <div class="row">
         <!-- if source is considered unreliable, display result card as RED-->
         {%if indb == 1%} 
-            <div class="col s12 m6">
-                <div class="card yellow darken-4">
-                    <div class="card-content white-text">
-                        <span class="card-title">Analysis Results</span>
+            <div class="col s12 orange darken-4 white-text center-align">
+                <div class="section"><h4>Analysis</h4>
                         <p>{{ domain }}{{ sourcedescr }}</p>
-                    </div>
-                    <div class="card-action">
-                        <a href="#">Link</a>
-                    </div>
                 </div>
             </div>
-       <!-- display the tags associated with the unreliable source site-->
-        <div class="col s12 m6">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title">Site content tags</span>
-                    <p><ul>
+    </div>
+
+<div class="row">
+    <div class="section"><h5 class="center-align"><b>Content tags related to this source ({{domain}})</b></h5>
+                        <p><ul>
                         {% for value in labelinfo %}
-                            <li>{{ value }}  </li>
+                           <h6> <li class="center-align">{{ value }}  </li></h6>
                         {% endfor %}
                     </ul></p>
-                 <p><i> These labels are associated with content from {{domain}}</i></p>
-                </div>
-                <!-- <div class="card-action">
-                    <p> Labels associated with content from {{domain}}</p>
-                </div> -->
-            </div>
-        </div>
+                </div>      
+</div>
+    <div class="row">
+       <!-- display the tags associated with the unreliable source site-->
+        
+        
          <!-- if source is considered generally reliable, display result card as GREEN-->
         {%elif indb == 0%}
-             <div class="col s12 m6">
-                <div class="card green darken-2">
-                    <div class="card-content white-text">
-                        <span class="card-title">Analysis </span>
+            <div class="row">
+            <div class="col s12 blue darken-2 white-text center-align >
+
+                   <div class="section"><h4>Analysis </h4>
                         <p>{{ domain }}{{ sourcedescr }}</p>
                     </div>
-                    <div class="card-action">
-                       
-                        <a href="#">Add link to submit another article here</a>
-                    </div>
+                   
+                    
                 </div>
             </div>
             
         {%endif%}
         
     </div>
-    <br>
-    <div class="container">
+<div class="container grey lighten-2">
+    <div class="row">
+        <div class="section center-align ">
         <h5> What are content tags?</h5>
+            
         <br> 
-        <p>Insert general description here.</p>
-        <br>
+            <p>Tags, or site labels, describe the reasons why a particular site may be considered unreliable. </p>
+        
         <p>List label descriptions here. Better formatting for page to come</p>
     </div>
+</div>
+</div>
     <br>
     {% if data.images %}
     <b>Images: </b>
