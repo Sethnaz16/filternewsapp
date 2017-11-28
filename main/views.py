@@ -66,9 +66,10 @@ def analyze(request):
         # key-value pairs
       
         extract_videos(url)
+        alllabelinfo = label_info()
       
     
-    return render(request, 'main/results.html', { 'data': data, 'id': id, 'domain' : domain,'labelinfo' : label_results, 'sourcedescr' : source_descr, 'indb' : is_in_db})
+    return render(request, 'main/results.html', { 'data': data, 'id': id, 'domain' : domain,'alllabelinfo' : alllabelinfo, 'labelinfo' : label_results, 'sourcedescr' : source_descr, 'indb' : is_in_db})
 
 def extract_videos(url):
     meet = requests.get(url).text 
@@ -114,7 +115,7 @@ def get_domain(url):
 
 # Return the description corresponding to a give site tag
 def label_description(label):
-        label = str(label)
+        label = str(label).capitalize()
         label_descriptions = label_info()
         
         desc = ''

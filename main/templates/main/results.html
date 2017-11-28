@@ -60,17 +60,14 @@
      {%elif indb == 0%}
      <div class="row">
         <div class="col s12 blue darken-2 white-text center-align" >
-    <!-- if source is considered generally reliable, display result card as GREEN-->
-    {%elif indb == 0%}
-    <div class="row">
-        <div class="col s12 blue darken-2 white-text center-align" >
+   
 
            <div class="section"><h4>Analysis </h4>
             <p>{{ domain }}{{ sourcedescr }}</p>
         </div>
 
 
-    </div>
+
 </div>
 
 {%endif%}
@@ -78,13 +75,16 @@
 </div>
 <div class="container col s12 grey lighten-2">
     <div class="row">
-        <div class="section col s12 center-align ">
-            <h5> What are content tags?</h5>
+        <div class="section col s12 left-align ">
+            <h5 class="center-align"> What are content tags?</h5>
             
             <br> 
-            <p>Tags, or site labels, describe the reasons why a particular site may be considered unreliable. </p>
-
-            <p>List label descriptions here. Better formatting for page to come</p>
+            <p class="center-align">Tags, or site labels, describe the reasons why a particular site may be considered unreliable. </p>
+            <ul>
+            <p>{% for key, value in alllabelinfo.items %}</p>
+            <li><b>{{key}}</b>: {{value}}</li>
+            {% endfor %}
+        </ul>
         </div>
     </div>
 </div>
